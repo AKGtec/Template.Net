@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ProjectTemplate.API.ExtensionMethods;
+using ProjectTemplate.API.Extensions;
 using ProjectTemplate.Contracts;
 using ProjectTemplate.Models.DataSource;
 using Newtonsoft.Json.Serialization;
@@ -31,6 +32,7 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager(builder.Configuration);
 builder.Services.ConfigureServiceManager();
+builder.Services.ConfigureAutoMapper();
 
 builder.Services.AddControllersWithViews(config => {
     config.RespectBrowserAcceptHeader = true;
@@ -126,5 +128,9 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 app.UseStaticFiles();
 app.UseAuthorization();
 app.MapControllers();
+
+// Seed data
+await DataSeeder.SeedRolesAsync(app.Services);
+await DataSeeder.SeedAdminUserAsync(app.Services);
 
 app.Run();

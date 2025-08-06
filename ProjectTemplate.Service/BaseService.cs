@@ -29,7 +29,7 @@ public abstract class BaseService<TDto, TEntity> : IBaseService<TDto, TEntity>
         throw new NotImplementedException("GetAllAsync must be implemented in derived class");
     }
 
-    public virtual async Task<TDto?> GetByIdAsync(int id, bool trackChanges)
+    public virtual async Task<TDto?> GetByIdAsync(Guid id, bool trackChanges)
     {
         // Override this method in derived classes to implement specific logic
         throw new NotImplementedException("GetByIdAsync must be implemented in derived class");
@@ -41,19 +41,19 @@ public abstract class BaseService<TDto, TEntity> : IBaseService<TDto, TEntity>
         throw new NotImplementedException("CreateAsync must be implemented in derived class");
     }
 
-    public virtual async Task UpdateAsync(int id, TDto dto, bool trackChanges)
+    public virtual async Task UpdateAsync(Guid id, TDto dto, bool trackChanges)
     {
         // Override this method in derived classes to implement specific logic
         throw new NotImplementedException("UpdateAsync must be implemented in derived class");
     }
 
-    public virtual async Task DeleteAsync(int id, bool trackChanges)
+    public virtual async Task DeleteAsync(Guid id, bool trackChanges)
     {
         // Override this method in derived classes to implement specific logic
         throw new NotImplementedException("DeleteAsync must be implemented in derived class");
     }
 
-    protected void CheckIfEntityExists(TEntity? entity, int id)
+    protected void CheckIfEntityExists(TEntity? entity, Guid id)
     {
         if (entity is null)
             throw new EntityNotFoundException(typeof(TEntity).Name, id);

@@ -7,22 +7,22 @@ public sealed class RepositoryManager : IRepositoryManager
 {
     private readonly ProjectTemplateContext _repositoryContext;
     
-    // Add your specific repositories here
-    // private readonly Lazy<IUserRepository> _userRepository;
-    // private readonly Lazy<IProductRepository> _productRepository;
+    private readonly Lazy<IWorkflowRepository> _workflowRepository;
+    private readonly Lazy<IRequestRepository> _requestRepository;
+    private readonly Lazy<INotificationRepository> _notificationRepository;
 
     public RepositoryManager(ProjectTemplateContext repositoryContext)
     {
         _repositoryContext = repositoryContext;
-        
-        // Initialize your repositories here
-        // _userRepository = new Lazy<IUserRepository>(() => new UserRepository(repositoryContext));
-        // _productRepository = new Lazy<IProductRepository>(() => new ProductRepository(repositoryContext));
+
+        _workflowRepository = new Lazy<IWorkflowRepository>(() => new WorkflowRepository(repositoryContext));
+        _requestRepository = new Lazy<IRequestRepository>(() => new RequestRepository(repositoryContext));
+        _notificationRepository = new Lazy<INotificationRepository>(() => new NotificationRepository(repositoryContext));
     }
 
-    // Add your repository properties here
-    // public IUserRepository User => _userRepository.Value;
-    // public IProductRepository Product => _productRepository.Value;
+    public IWorkflowRepository Workflow => _workflowRepository.Value;
+    public IRequestRepository Request => _requestRepository.Value;
+    public INotificationRepository Notification => _notificationRepository.Value;
 
     public void Save() => _repositoryContext.SaveChanges();
 

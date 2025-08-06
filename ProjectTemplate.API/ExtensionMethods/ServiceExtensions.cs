@@ -31,8 +31,8 @@ public static class ServiceExtensions
 
     public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ProjectTemplateContext>(options => 
-            options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+        services.AddDbContext<ProjectTemplateContext>(options =>
+            options.UseSqlite(configuration.GetConnectionString("sqlConnection")));
         services.AddScoped<ProjectTemplateContext>();
     }
 
@@ -44,17 +44,26 @@ public static class ServiceExtensions
     public static void ConfigureRepositoryManager(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IRepositoryManager, RepositoryManager>();
-        services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
-        
-        // Add your specific repository services here
-        // Example: services.AddScoped<IUserService, UserService>();
+
+        // Add specific repository services
+        services.AddScoped<IWorkflowRepository, WorkflowRepository>();
+        services.AddScoped<IRequestRepository, RequestRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
     }
 
     public static void ConfigureServiceManager(this IServiceCollection services)
     {
         services.AddScoped<IServiceManager, ServiceManager>();
-        
-        // Add your specific services here
-        // Example: services.AddScoped<IUserService, UserService>();
+
+        // Add specific services
+        services.AddScoped<IWorkflowService, WorkflowService>();
+        services.AddScoped<IRequestService, RequestService>();
+        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+    }
+
+    public static void ConfigureAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(MappingProfile));
     }
 }

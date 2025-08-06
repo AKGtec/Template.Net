@@ -2,7 +2,8 @@ namespace ProjectTemplate.Service.Contracts;
 
 public interface IServiceManager
 {
-    // Add your specific service interfaces here
-    // Example: IUserService UserService { get; }
-    // Example: IProductService ProductService { get; }
+    IWorkflowService WorkflowService { get; }
+    IRequestService RequestService { get; }
+    INotificationService NotificationService { get; }
+    IAuthenticationService AuthenticationService { get; }
 }
